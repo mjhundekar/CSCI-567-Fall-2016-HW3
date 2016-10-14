@@ -122,9 +122,11 @@ fprintf('Average Time = %f\n', t/33);
 fprintf('Best Accuracy = %f is obtained with C = %f and Gamma = %f\n\n',Max, C_Max, gamma_max);
 
 %Train USING RBF
- model = svmtrain(heart_scale_label, heart_scale_inst, '-c 1 -g 0.07');
-[predict_label, accuracy, dec_values] = svmpredict(heart_scale_label, heart_scale_inst, model); % test the training data
+% %  model = svmtrain(heart_scale_label, heart_scale_inst, '-c 1 -g 0.07');
+% % [predict_label, accuracy, dec_values] = svmpredict(heart_scale_label, heart_scale_inst, model); 
+% test the training data
 
 
-cmd = ['-t 2 -q -c ', num2str(16), ' -g ', num2str(0.062500) ];
-
+cmd = ['-t 2 -c ', num2str(16), ' -g ', num2str(0.062500) ];
+model = libsvmtrain(double(orig_train_label'), double(processed_train) ,cmd);
+[predict_label, accuracy, dec_values] = svmpredict(double(orig_test_label'), double(orig_test_features), model); 
