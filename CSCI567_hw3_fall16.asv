@@ -1,0 +1,68 @@
+% labels = double(rand(10,1)>0.5);
+% data = rand(10,5);
+% model = svmtrain(labels, data, '-s 0 -t 2 -c 1 -g 0.1')
+
+orig_test  = load('phishing-test.mat');
+orig_train = load('phishing-train.mat');
+
+orig_test_features = orig_test.features;
+orig_test_label = orig_test.label;
+orig_train_features = orig_train.features;
+orig_train_label = orig_train.label;
+
+length(orig_test_features(1,:));
+unq_elem = [];
+for i=1:length(orig_test_features(1,:))
+    %     if i ==16
+    %         unique(orig_test_features(:,i))
+    %     end
+    C = unique(orig_test_features(:,i));
+    
+    if length(c) == 3 % split current column into 3 columns
+        
+        % set -1, 0 to 0 and 1 as 1
+        curr_col = orig_test_features(:,i);
+        curr_col(curr_col == -1) = 0;
+        curr_col_1 = curr_col;
+        % set 1, -1 to 0 and 0 to 1
+        curr_col = orig_test_features(:,i);
+        curr_col(curr_col == -1) = 2;
+        curr_col(curr_col == 1) = 2;
+        curr_col(curr_col == 0) = 1;
+        curr_col(curr_col == 2) = 0;
+        curr_col_0 = curr_col;
+        
+        % set 1, 0 to 0 and -1 to 1
+        curr_col = orig_test_features(:,i);
+        curr_col(curr_col == 1) = 0;
+        curr_col(curr_col == -1) = 1;
+        curr_col_m1 = curr_col;
+        % remove current row and append the 3 new ones at the end
+        orig_test_features(:,i) = [];
+        
+        orig_test_features = [orig_test_features, curr_col_0, curr_col_1, curr_col_m1];
+    end
+    
+    if length(c) == 2
+        if isequal(C, [1, -1]) || isequal(C, [-1, 1])
+            curr_col = orig_test_features(:,i);
+            curr_col(curr_col == -1) = 0;
+            orig_test_features(:,i) = curr_col;
+            
+        else if isequal(C, [-1, 0]) || isequal(C, [0, -1])
+                curr_col = orig_test_features(:,i);
+                curr_col(curr_col == -1) = 0;
+                orig_test_features(:,i) = curr_col;
+                
+                
+                
+            end
+        end
+        
+    end
+    
+    
+end
+
+
+
