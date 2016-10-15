@@ -62,8 +62,8 @@ end
 for i=1:11
     for j=1:3
         cmd = ['-v 3 -t 1 -q -c ', num2str(C(i)), ' -d ', num2str(d(j)) ];
-        fprintf('C = %f\n',C(i));
-        fprintf('Degree = %f\n',d(j));
+        fprintf('C = %f \t\tDegree = %f\n',C(i),d(j));
+%         fprintf('Degree = %f\n',d(j));
         tic
         M = libsvmtrain(double(orig_train_label'), double(processed_train) ,cmd);
         stop = toc;
@@ -103,8 +103,8 @@ end
 for i=1:11
     for j=1:7
         cmd = ['-v 3 -t 2 -q -c ', num2str(C(i)), ' -g ', num2str(gamma(j)) ];
-        fprintf('C = %f\n',C(i));
-        fprintf('Gamma = %f\n',gamma(j));
+        fprintf('C = %f\t\tGamma = %f\n',C(i),gamma(j));
+%         fprintf('Gamma = %f\n',gamma(j));
         tic
         M = libsvmtrain(double(orig_train_label'), double(processed_train) ,cmd);
         stop = toc;
@@ -127,4 +127,4 @@ fprintf('Best Accuracy = %f is obtained with C = %f and Gamma = %f\n\n',Max, C_M
 % 
 % 
 % cmd = ['-t 2 -q -c ', num2str(16), ' -g ', num2str(0.062500) ];
-
+Script_Bias_Variance_Trade_off;
